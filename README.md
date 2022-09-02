@@ -1,2 +1,3 @@
-# dotnet-grpc-examples
+# .NET gRPC Examples
+
 .NET gRPC examples
