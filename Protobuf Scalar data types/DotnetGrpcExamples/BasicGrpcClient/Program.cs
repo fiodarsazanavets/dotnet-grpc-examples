@@ -1,5 +1,7 @@
 ﻿using BasicGrpcService;
 using Grpc.Net.Client;
+using System.Text;
+using System.Text.Json;
 
 Console.WriteLine("What is your name?");
 var name = Console.ReadLine();
@@ -26,7 +28,17 @@ while (true)
                       Message = message
                   });
     Console.WriteLine($"Reply: {reply.Message}");
-}
+    Console.WriteLine($"Answer found: {reply.AnswerFound}");
 
+    var messageBytes = Encoding
+        .UTF8
+        .GetString(reply.ReplyInBytes.ToByteArray());
+
+    Console.WriteLine($"Reply from bytes: {messageBytes}");
+
+    var payloadString = JsonSerializer.Serialize(reply.Payload);
+
+    Console.WriteLine($"Payload: {payloadString}");
+}
 
 Console.ReadKey();

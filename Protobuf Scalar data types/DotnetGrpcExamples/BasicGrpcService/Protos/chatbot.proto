@@ -1,0 +1,37 @@
+syntax = "proto3";
+
+option csharp_namespace = "BasicGrpcService";
+
+package basic_grpc_service;
+
+service Chatbot {
+  rpc SendMessage (ChatRequest) returns (ChatReply);
+}
+
+message ChatRequest {
+  string name = 1;
+  string message = 2;
+}
+
+message ChatReply {
+  string message = 1;
+  bool answer_found = 2;
+  bytes reply_in_bytes = 3;
+  NumericPayload payload = 4;
+}
+
+message NumericPayload
+{
+	float float_demo = 1;
+	double double_demo = 2;
+	int32 int32_demo = 3;
+	int64 int64_demo = 4;
+	uint32 uint32_demo = 5;
+	uint64 uint64_demo = 6;
+	sint32 sint32_demo = 7;
+	sint64 sint64_demo = 8;
+	fixed32 fixed32_demo = 9;
+	fixed64 fixed64_demo = 10;
+	sfixed32 sfixed32_demo = 11;
+	sfixed64 sfixed64_demo = 12;
+}
