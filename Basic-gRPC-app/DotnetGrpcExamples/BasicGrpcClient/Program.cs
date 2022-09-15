@@ -7,7 +7,7 @@ var name = Console.ReadLine();
 Console.WriteLine($"Hello {name}. You can start chatting now.");
 Console.WriteLine("Type 'exit' to stop at any time.");
 
-using var channel = GrpcChannel.ForAddress("https://localhost:7100");
+using var channel = GrpcChannel.ForAddress("http://localhost:5100");
 var client = new Chatbot.ChatbotClient(channel);
 
 while (true)

@@ -10,6 +10,9 @@ builder.Logging.AddConsole();
 
 builder.WebHost.ConfigureKestrel(options =>
 {
+	options.ListenAnyIP(5000, o => o.Protocols =
+        HttpProtocols.Http1);
+	
     options.ListenAnyIP(5100, o => o.Protocols =
         HttpProtocols.Http2);
 
