@@ -38,6 +38,7 @@ while (true)
 
     Console.WriteLine($"Answer type: {reply.AnswerType}");
     Console.WriteLine($"Response type: {reply.ResponseType}");
+    Console.WriteLine($"Unknown request: {reply.UnknownRequest}");
 
     Console.WriteLine("Older messages:");
     foreach (var entry in reply.MessageHistory)

@@ -1,0 +1,47 @@
+syntax = "proto3";
+
+option csharp_namespace = "BasicGrpcService";
+
+package basic_grpc_service;
+
+service Chatbot {
+  rpc SendMessage (ChatRequest) returns (ChatReply);
+}
+
+message ChatRequest {
+  string name = 1;
+  string message = 2;
+}
+
+message ChatReply {
+  string message = 1;
+  bool answer_found = 2;
+  bytes reply_in_bytes = 3;
+  map <int32, ChatHistoryEntry> message_history = 4;
+  oneof reply_category {
+    AnswerType answer_type = 5;
+    ChatHistoryEntry.ResponseType response_type = 6;
+	bool unknown_request = 7;
+  }
+}
+
+message ChatHistoryEntry
+{
+  string request_message = 1;
+  string response_message = 2;
+  enum ResponseType
+  {
+	option allow_alias = true;
+	UNKNOWN = 0;
+	HELP = 1;
+	ASSISTANCE = 1;
+	GREETING = 2;
+  }
+}
+
+enum AnswerType
+{
+  UNKNOWN = 0;
+  HELP = 1;
+  GREETING = 2;
+}
