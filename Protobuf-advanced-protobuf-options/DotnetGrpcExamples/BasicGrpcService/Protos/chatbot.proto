@@ -1,0 +1,25 @@
+syntax = "proto3";
+
+option csharp_namespace = "BasicGrpcService";
+option java_package = "basicGrpcService";
+option java_outer_classname = "Chatbot";
+option java_multiple_files = true;
+option optimize_for = CODE_SIZE;
+
+import "google/protobuf/wrappers.proto";
+import "google/protobuf/duration.proto";
+import "google/protobuf/timestamp.proto";
+import "google/protobuf/any.proto";
+import "Protos/response.proto";
+
+package basic_grpc_service;
+
+service Chatbot {
+  rpc SendMessage (ChatRequest) returns (response.ChatReply);
+}
+
+message ChatRequest {
+  google.protobuf.StringValue name = 1;
+  google.protobuf.StringValue message = 2;
+  google.protobuf.Timestamp request_start_time = 3;
+}
