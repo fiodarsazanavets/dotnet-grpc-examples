@@ -19,3 +19,10 @@ message ChatReply {
   repeated int32 packed_numbers = 9 [packed = true];
   optional string optional_field = 10;
 }
+
+enum MessagyType {
+  option allow_alias = true;
+  UNKNOWN = 0;
+  UNDEFINED = 0;
+  VALID = 1;
+}
