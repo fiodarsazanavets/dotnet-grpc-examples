@@ -1,5 +1,6 @@
 using BasicGrpcService;
 using Grpc.Net.Client.Balancer;
+using Microsoft.AspNetCore.Server.Kestrel.Core;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -15,13 +16,21 @@ builder.Services.AddGrpcClient<Chatbot.ChatbotClient>(o =>
 builder.Services.AddSingleton<ResolverFactory>(
     sp => new DnsResolverFactory(refreshInterval: TimeSpan.FromSeconds(30)));
 
+builder.WebHost.ConfigureKestrel(options =>
+{
+    options.ListenAnyIP(5000, o => o.Protocols =
+        HttpProtocols.Http1);
+});
+
 var app = builder.Build();
 
-if (app.Environment.IsDevelopment())
+app.UseSwagger();
+app.UseSwaggerUI(c =>
 {
-    app.UseSwagger();
-    app.UseSwaggerUI();
-}
+    c.SwaggerEndpoint("/swagger/v1/swagger.json", "gRPC Client");
+    c.RoutePrefix = string.Empty;
+});
+
 
 app.UseHttpsRedirection();
 app.UseAuthorization();

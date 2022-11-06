@@ -2,7 +2,7 @@ using BasicGrpcService;
 using Grpc.Core;
 using Grpc.Net.Client.Balancer;
 using Grpc.Net.Client.Configuration;
-using System.Net;
+using Microsoft.AspNetCore.Server.Kestrel.Core;
 using WebApiGrpcClient;
 using static WebApiGrpcClient.RandmomizedBalancer;
 
@@ -31,13 +31,20 @@ builder.Services.AddGrpcClient<Chatbot.ChatbotClient>(o =>
     };
 });
 
+builder.WebHost.ConfigureKestrel(options =>
+{
+    options.ListenAnyIP(5000, o => o.Protocols =
+        HttpProtocols.Http1);
+});
+
 var app = builder.Build();
 
-if (app.Environment.IsDevelopment())
+app.UseSwagger();
+app.UseSwaggerUI(c =>
 {
-    app.UseSwagger();
-    app.UseSwaggerUI();
-}
+    c.SwaggerEndpoint("/swagger/v1/swagger.json", "gRPC Client");
+    c.RoutePrefix = string.Empty;
+});
 
 app.UseHttpsRedirection();
 app.UseAuthorization();
