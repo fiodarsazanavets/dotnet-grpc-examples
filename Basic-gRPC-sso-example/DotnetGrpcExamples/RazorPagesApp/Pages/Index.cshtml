@@ -1,0 +1,20 @@
+﻿@page
+@model IndexModel
+@{
+    ViewData["Title"] = "Home page";
+}
+
+<div class="text-center">
+    <h1 class="display-4">Protected message:</h1>
+    <p>@Model.Message</p>
+</div>
+
+<div class="text-center">
+    <h1 class="display-4">Secret message:</h1>
+    <p>@Model.SecretMessage</p>
+</div>
+
+<div class="text-center">
+    <h1 class="display-4">Open message:</h1>
+    <p>@Model.OpenMessage</p>
+</div>

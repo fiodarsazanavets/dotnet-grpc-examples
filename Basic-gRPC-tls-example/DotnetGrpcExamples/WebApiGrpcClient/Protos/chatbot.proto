@@ -1,0 +1,18 @@
+syntax = "proto3";
+
+option csharp_namespace = "BasicGrpcService";
+
+package basic_grpc_service;
+
+service Chatbot {
+  rpc SendMessage (ChatRequest) returns (ChatReply);
+}
+
+message ChatRequest {
+  string name = 1;
+  string message = 2;
+}
+
+message ChatReply {
+  string message = 1;
+}
