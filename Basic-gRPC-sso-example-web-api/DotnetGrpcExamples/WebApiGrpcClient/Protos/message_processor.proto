@@ -1,0 +1,18 @@
+syntax = "proto3";
+
+option csharp_namespace = "BasicGrpcService";
+
+package basic_grpc_service;
+
+service MessageProcessor {
+  rpc GetMessage (Request) returns (Reply);
+  rpc GetSecretMessage (Request) returns (Reply);
+  rpc GetOpenMessage (Request) returns (Reply);
+}
+
+message Request {
+}
+
+message Reply {
+  string message = 1;
+}
