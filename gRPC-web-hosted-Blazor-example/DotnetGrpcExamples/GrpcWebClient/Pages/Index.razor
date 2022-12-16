@@ -1,0 +1,53 @@
+﻿@page "/"
+@using BasicGrpcService
+@using Grpc.Net.Client
+@using Grpc.Net.Client.Web
+@inject NavigationManager NavigationManager
+
+<h1>Counter</h1>
+
+<div class="row" style="padding-top: 50px;">
+    <div class="col-md-4">
+        <div>
+            <div>
+                <label for="name">Name</label>
+                <input @bind="name" type="text" id="name" name="name" />
+            </div>
+            <div>
+                <label for="requestMessage">Message</label>
+                <input @bind="requestMessage" type="text" id="requestMessage" name="requestMessage" />
+            </div>
+            <button class="btn btn-primary" @onclick="SendMessage">Click me</button>
+        </div>
+    </div>
+</div>
+
+<p role="status">Response message: @responseMessage</p>
+
+
+@code {
+    private string name = string.Empty;
+    private string requestMessage = string.Empty;
+    private string responseMessage = string.Empty;
+
+    private async Task SendMessage()
+    {
+        var channel = GrpcChannel.ForAddress(
+            NavigationManager.ToAbsoluteUri(string.Empty),
+            new GrpcChannelOptions
+            {
+                HttpHandler = new GrpcWebHandler(new HttpClientHandler())
+            });
+
+        var client = new Chatbot.ChatbotClient(channel);
+
+        var reply = await client.SendMessageAsync(new ChatRequest
+            {
+                Name = name,
+                Message = requestMessage
+            });
+        responseMessage = reply.Message;
+
+        StateHasChanged();
+    }
+}
